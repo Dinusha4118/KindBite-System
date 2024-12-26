@@ -1,0 +1,242 @@
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.logo-image {
+  height: 100px; /* Adjust size as needed */
+  width: 200px;
+  margin-right: 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.contact-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.contact-button:hover {
+  background-color: #444;
+}
+
+/* Hero Section Styling */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  background: url('../images/darkfood.jpg') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.hero-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.hero-button:hover {
+  background-color: #218838;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 40px 20px;
+  margin-top: 0px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-section {
+  flex: 1 1 300px;
+  margin-bottom: 20px;
+  margin-left: 7%;
+}
+
+.footer-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 5px 0;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Hero Section */
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .hero-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  /* Footer */
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Navbar */
+  .logo {
+    font-size: 20px;
+  }
+
+  .nav-links {
+    font-size: 14px;
+  }
+
+  .contact-button {
+    padding: 8px 15px;
+  }
+
+  /* Hero Section */
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  /* Footer */
+  .footer-section h2 {
+    font-size: 18px;
+  }
+
+  .footer-section p {
+    font-size: 12px;
+  }
+}
+
+/* Add this at the end of Services.css */
+.services-page {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
