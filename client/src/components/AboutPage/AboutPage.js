@@ -1,5 +1,5 @@
 import React from "react";
-import "./Homepage.css"; // Reuse your existing CSS
+import "../Homepage/Homepage.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../images/kindbite.png"; // Adjust the path based on your project structure
 
@@ -39,9 +39,9 @@ const AboutPage = () => {
       {/* About Section */}
       <section className="about-section">
         <div className="about-content">
-          <h2>Reduce waste, feed the hungry</h2>
+          <h2>Reduce waste,feed the hungry</h2>
           <p>
-            FoodLink is a dynamic platform based in Gampaha, LK, dedicated to reducing food waste and fighting food insecurity.
+            Kindbite is a dynamic platform based in Sri Lanka, dedicated to reducing food waste and fighting food insecurity.
             We connect food donors such as restaurants, supermarkets, and event organizers with volunteers and communities in need.
             Our platform allows donors to easily list surplus food, while recipients can request donations. Volunteers play a vital role
             in facilitating logistics. With real-time notifications, donation tracking, and valuable analytics, FoodLink ensures food distribution is
@@ -50,7 +50,7 @@ const AboutPage = () => {
           <a href="#contact" className="about-button">Get in touch</a>
         </div>
         <div className="about-image">
-          <img src={require("../images/about.png")} alt="Food Donation Box" />
+          <img src={require("../images/reduse.jpg")} alt="Food Donation Box" />
         </div>
       </section>
 
