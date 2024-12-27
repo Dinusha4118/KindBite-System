@@ -1,0 +1,46 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('./young-girl-with-delicious-3d-burger.jpg');
+    background-size: 800px 100vh;
+    background-position: right;
+    background-repeat: no-repeat;
+   color: white;
+}
+
+.login-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 750px; 
+    height: 100vh; 
+    background-image: linear-gradient(to right, #1f1f1f, #020327);;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: right;
+    margin-top: 1px;
+    width: 250px; 
+    height: 30px; 
+    border-radius: 12px; 
+    background-color: #ffffff;
+}
+
+.btn{
+    margin-top: 10px;
+    width: 250px; 
+    height: 30px; 
+    border-radius: 12px; 
+    background-color: #4CAF50;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
