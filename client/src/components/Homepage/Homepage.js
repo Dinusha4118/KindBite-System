@@ -22,10 +22,13 @@ const Homepage = () => {
     navigate("/HowItWorks");
   }
 
-  const worksignin = () => {
-      alert("Thama wada na Bro")
-  };
+  const singin = () => {
+     navigate("/login")
+  }
 
+  const singout= () => {
+    navigate("/Register")
+  }
   return (
     <div className="homepage">
       {/* Navbar */}
@@ -44,8 +47,8 @@ const Homepage = () => {
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
-        <button className="singin" onClick={worksignin}>SignIn</button>
-        <button className="singup">SignUp</button>
+        <button className="singin" onClick={singin}>SignIn</button>
+        <button className="singup" onClick={singout}>SignUp</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 

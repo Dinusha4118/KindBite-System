@@ -22,10 +22,15 @@ const AboutPage = () => {
   const goToHow = () => {
     navigate("/HowItWorks");
   }
+  
+  const singin = () => {
+    navigate("/login")
+ }
 
-  const worksignin = () => {
-    alert("Thama wada na Bro")
-  };
+ const singout= () => {
+   navigate("/Register")
+ }
+
 
   return (
     <div className="about-page">
@@ -45,8 +50,8 @@ const AboutPage = () => {
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
-        <button className="singin" onClick={worksignin}>SignIn</button>
-        <button className="singup">SignUp</button>
+        <button className="singin" onClick={singin}>SignIn</button>
+        <button className="singup" onClick={singout}>SignUp</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 

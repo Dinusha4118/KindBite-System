@@ -33,6 +33,15 @@ const HowItWorks = () => {
     navigate("/Teempage");
   };
 
+  const singin = () => {
+    navigate("/login")
+ }
+
+ const singout= () => {
+   navigate("/Register")
+ }
+
+
   return (
     <div className="how-it-works-page">
       {/* Header */}
@@ -68,8 +77,8 @@ const HowItWorks = () => {
             </li>
           </ul>
         </nav>
-        <button className="singin">SignIn</button>
-        <button className="singup">SignUp</button>
+        <button className="singin" onClick={singin}>SignIn</button>
+        <button className="singup" onClick={singout}>SignUp</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 

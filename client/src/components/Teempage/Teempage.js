@@ -18,12 +18,16 @@ const Teempage = () => {
   const goToServices = () => {
     navigate("/services");
   };
+  
+  const singin = () => {
+    navigate("/login")
+ }
 
+ const singout= () => {
+   navigate("/Register")
+ }
 
-  const worksignin = () => {
-    alert("Thama wada na Bro")
-  };
-
+  
   return (
     <div className="services-page">
       {/* Navbar */}
@@ -42,8 +46,8 @@ const Teempage = () => {
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
-        <button className="singin" onClick={worksignin}>SignIn</button>
-        <button className="singup">SignUp</button>
+        <button className="singin" onClick={singin}>SignIn</button>
+        <button className="singup" onClick={singout}>SignUp</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 
