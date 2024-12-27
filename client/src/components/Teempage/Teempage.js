@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Services.css";
+import "../Services/Services.css";
 import logo from "../images/kindbite.png"; // Adjust the path based on your project structure
 
 
-const Services = () => {
+const Teempage = () => {
   const navigate = useNavigate();
 
   const goToHomepage = () => {
@@ -15,13 +15,9 @@ const Services = () => {
     navigate("/about");
   };
 
-  const goToTeem = () => {
-    navigate("/Teempage");
-  }
-
-  const goToHow = () => {
-    navigate("/HowItWorks");
-  }
+  const goToServices = () => {
+    navigate("/services");
+  };
 
 
   const worksignin = () => {
@@ -39,10 +35,10 @@ const Services = () => {
           <ul className="nav-links">
             <li><span onClick={goToHomepage} className="nav-link-button">Home</span></li>
             <li><span onClick={goToAbout} className="nav-link-button">About</span></li>
-            <li><a href="#services">Services</a></li>
-            <li><span onClick={goToTeem} className="nav-link-button">Teem</span></li>
+            <li><span onClick={goToServices} className="nav-link-button">Services</span></li>
+            <li><a href="#team">Team</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><span onClick={goToHow} className="nav-link-button">how it work</span></li>
+            <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
@@ -51,28 +47,34 @@ const Services = () => {
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 
-      {/* Services Header */}
+      {/* Teem Header */}
       <header className="services-header">
-        <h3>Connecting Communities</h3>
-        <h1>Bridging the gap between surplus and need</h1>
+        <h3>Our Mission-Driven network</h3>
+        <h1>Connecting food donors with communities</h1>
       </header>
 
       {/* Services Cards */}
       <div className="services-cards">
         <div className="service-card">
-          <img src={require("../images/food-donations.jpg")} alt="Food Donation Platform" />
-          <h3>Food donation platform</h3>
-          <p>Connect with local food donors and recipients effortlessly.</p>
+          <img src={require("../images/sanuka.png")} alt="founder" />
+          <h3>shamith de silva</h3>
+          <p>Founder & CEO</p>
+          <p>A passionate advocate for food sustainability, Shamith leads Kindbite's mission with vision and dedication.</p>
+          <button className="reed">READ MORE</button>
         </div>
         <div className="service-card">
-          <img src={require("../images/volunteer-coordinator.jpg")} alt="Volunteer Coordination" />
-          <h3>Volunteer coordination</h3>
-          <p>Become a vital part of our logistics network.</p>
+          <img src={require("../images/sara.png")} alt="OP" />
+          <h3>Sakuni Rajapaksha</h3>
+          <p>Operations Manager</p>
+          <p>Sakuni expertly manages operations, optimizing food distribution for maximum community impact.</p>
+          <button className="reed">READ MORE</button>
         </div>
         <div className="service-card">
-          <img src={require("../images/realtime.jpg")} alt="Real-Time Tracking" />
-          <h3>Real-Time tracking and analytics</h3>
-          <p>Stay informed with our advanced tracking system.</p>
+          <img src={require("../images/wilum.png")} alt="Real-Time Tracking" />
+          <h3>Sudesh Siriwardhana</h3>
+          <p>Community Engagement Coordinator</p>
+          <p>Sudesh fosters community connections, empowering individuals to join the fight against food waste.</p>
+          <button className="reed">READ MORE</button>
         </div>
       </div>
 
@@ -89,7 +91,7 @@ const Services = () => {
               <li><span onClick={goToHomepage} className="nav-link-button">Home</span></li>
               <li><span onClick={goToAbout} className="nav-link-button">About</span></li>
               <li><a href="#Services">Services</a></li>
-              <li><span onClick={goToTeem} className="nav-link-button">Teem</span></li>
+              <li><a href="#team">Team</a></li>
               <li><a href="#testimonials">Testimonials</a></li>
             </ul>
           </div>
@@ -108,4 +110,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Teempage;

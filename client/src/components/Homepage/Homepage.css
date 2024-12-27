@@ -34,6 +34,33 @@
   font-weight: 500;
 }
 
+.singin {
+  background-color: rgb(253, 1, 1);
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-left: 9%;
+}
+
+.singin:hover {
+  background-color: #4ac913;
+}
+
+.singup {
+  background-color: rgb(253, 1, 1);
+  color: white;
+  padding: 10px 20px;
+  text-decoration:wavy;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.singup:hover {
+  background-color: #4ac913;
+}
+
 .contact-button {
   background-color: black;
   color: white;
