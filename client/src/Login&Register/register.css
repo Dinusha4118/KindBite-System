@@ -1,0 +1,33 @@
+.register{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background-image: url('./medium-shot-cartoonish-old-man-with-burger.jpg');
+    background-size: 800px 100vh;
+    background-position: right;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.register-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 750px; 
+    height: 100vh; 
+    background-image: linear-gradient(to right, #1f1f1f, #020327);;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 1px;
+    width: 250px; 
+    height: 30px; 
+    border-radius: 12px; 
+    background-color: #ffffff;
+}
