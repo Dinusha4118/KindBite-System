@@ -14,6 +14,18 @@ const Homepage = () => {
     navigate("/about");
   };
 
+  const goToTeem = () => {
+    navigate("/Teempage");
+  }
+
+  const goToHow = () => {
+    navigate("/HowItWorks");
+  }
+
+  const worksignin = () => {
+      alert("Thama wada na Bro")
+  };
+
   return (
     <div className="homepage">
       {/* Navbar */}
@@ -26,12 +38,14 @@ const Homepage = () => {
             <li><a href="home">Home</a></li>
             <li><span onClick={goToAbout} className="nav-link-button">About</span></li>
             <li><span onClick={goToServices} className="nav-link-button">Services</span></li>
-            <li><a href="#team">Team</a></li>
+            <li><span onClick={goToTeem} className="nav-link-button">Teem</span></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
+            <li><span onClick={goToHow} className="nav-link-button">how it work</span></li>
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
+        <button className="singin" onClick={worksignin}>SignIn</button>
+        <button className="singup">SignUp</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 
@@ -55,7 +69,7 @@ const Homepage = () => {
               <li><a href="#home">Home</a></li>
               <li><span onClick={goToAbout} className="nav-link-button">About</span></li>
               <li><span onClick={goToServices} className="nav-link-button">Services</span></li>
-              <li><a href="#team">Team</a></li>
+              <li><span onClick={goToTeem} className="nav-link-button">Teem</span></li>
               <li><a href="#testimonials">Testimonials</a></li>
             </ul>
           </div>

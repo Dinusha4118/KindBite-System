@@ -39,6 +39,33 @@
     color: #333;
     font-weight: 500;
   }
+
+  .singin {
+    background-color: rgb(253, 1, 1);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: 9%;
+  }
+  
+  .singin:hover {
+    background-color: #4ac913;
+  }
+  
+  .singup {
+    background-color: rgb(253, 1, 1);
+    color: white;
+    padding: 10px 20px;
+    text-decoration:wavy;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .singup:hover {
+    background-color: #4ac913;
+  }
   
 .services-header {
     margin-bottom: 40px;
@@ -58,6 +85,7 @@
     padding-right: 32.3%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
+
   
   /* Services Cards */
 .services-cards {
@@ -162,9 +190,35 @@
     margin: 0;
   }
   
+  .reed {
+    background-color: rgb(212, 210, 210);
+    color: rgb(5, 5, 5);
+    border-color: #333;
+    padding: 10px 20px;
+    text-decoration:wavy;
+    border-radius: 5px;
+    font-weight: bold;
+
+  }
 
   /* Add this at the end of Services.css */
 .services-page {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  * Add this at the end of Services.css */
+.Teem-page {
     animation: fadeIn 1s ease-in-out;
   }
   
