@@ -7,6 +7,11 @@ import Login from "./Login&Register/Login";
 import Register from "./Login&Register/Register";
 import Teempage from "./components/Teempage/Teempage";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
+import DonorPage from "./components/DonorPage/DonorPage";
+import SignIn from './components/donorAuth/SignIn';
+import SignUp from './components/donorAuth/SignUp';
+
+
 import "./App.css";
 
 
@@ -21,6 +26,10 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/Teempage" element={<Teempage />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
+        <Route path="/DonorPage" element={<DonorPage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+
       </Routes>
     </Router>
   );
