@@ -10,6 +10,7 @@ import HowItWorks from "./components/HowItWorks/HowItWorks";
 import DonorPage from "./components/DonorPage/DonorPage";
 import SignIn from './components/donorAuth/SignIn';
 import SignUp from './components/donorAuth/SignUp';
+import AccountType from './components/AcType/accountType';
 
 
 import "./App.css";
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/Teempage" element={<Teempage />} />
         <Route path="/HowItWorks" element={<HowItWorks />} />
         <Route path="/DonorPage" element={<DonorPage />} />
+        <Route path="/AccountType" element={<AccountType />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 

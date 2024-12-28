@@ -33,14 +33,8 @@ const HowItWorks = () => {
     navigate("/Teempage");
   };
 
-  const singin = () => {
-    navigate("/login")
- }
-
- const singout= () => {
-   navigate("/Register")
- }
-
+  const goToAc = () => {navigate("/AccountType")}
+ 
 
   return (
     <div className="how-it-works-page">
@@ -77,14 +71,13 @@ const HowItWorks = () => {
             </li>
           </ul>
         </nav>
-        <button className="singin" onClick={singin}>SignIn</button>
-        <button className="singup" onClick={singout}>SignUp</button>
+        <button className="singin" onClick={goToAc}>Select Account Type</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 
       {/* How It Works Section */}
       <section className="how-it-works">
-        <h1>Empowering food donations made easy</h1>
+        <h1 className="title">Empowering food donations made easy</h1>
         <div className="how-it-works-content">
           <div className="how-it-works-item">
             <img

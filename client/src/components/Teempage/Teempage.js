@@ -19,14 +19,11 @@ const Teempage = () => {
     navigate("/services");
   };
   
-  const singin = () => {
-    navigate("/login")
- }
+ const goToAc = () => {navigate("/AccountType");}
 
- const singout= () => {
-   navigate("/Register")
- }
-
+ const goToHow = () => {
+  navigate("/HowItWorks");
+}
   
   return (
     <div className="services-page">
@@ -42,12 +39,11 @@ const Teempage = () => {
             <li><span onClick={goToServices} className="nav-link-button">Services</span></li>
             <li><a href="#team">Team</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
+            <li><span onClick={goToHow} className="nav-link-button">how it work</span></li>
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
-        <button className="singin" onClick={singin}>SignIn</button>
-        <button className="singup" onClick={singout}>SignUp</button>
+        <button className="singin" onClick={goToAc}>Select Account Type</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 

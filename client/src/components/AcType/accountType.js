@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Services.css";
+import "./accountType.css";
 import logo from "../images/kindbite.png"; // Adjust the path based on your project structure
 
 
-const Services = () => {
+const AccountType = () => {
   const navigate = useNavigate();
 
   const goToHomepage = () => {
@@ -23,10 +23,25 @@ const Services = () => {
     navigate("/HowItWorks");
   }
   
- const goToAc = () => {navigate("/AccountType")}
+  const singin = () => {
+    navigate("/SignIn")
+ }
+
+ const singin1 = () => {
+    navigate("/login")
+ }
+
+ const singout = () => {
+    navigate("/SignUp")
+ }
+
+ const singout1 = () => {
+    navigate("/Register")
+ }
+ 
 
   return (
-    <div className="services-page">
+    <div className="ac-page">
       {/* Navbar */}
       <header className="navbar">
         <div className="logo">
@@ -43,32 +58,35 @@ const Services = () => {
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
-        <button className="singin" onClick={goToAc}>Select Account Type</button>
+        <button className="singin" onClick={singin}>Select Account Type</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 
       {/* Services Header */}
-      <header className="services-header">
+      <header className="ac-header">
         <h3>Connecting Communities</h3>
-        <h1>Bridging the gap between surplus and need</h1>
+        <h1>Register or SignIn Your Account</h1>
       </header>
 
       {/* Services Cards */}
-      <div className="services-cards">
-        <div className="service-card">
-          <img src={require("../images/food-donations.jpg")} alt="Food Donation Platform" />
-          <h3>Food donation platform</h3>
-          <p>Connect with local food donors and recipients effortlessly.</p>
+      <div className="ac-cards">
+        <div className="ac-card">
+          <img src={require("../images/vola.jpg")} alt="Food Donation Platform" />
+          <h3>Donor Account Type</h3>
+          <button className="singin1" onClick={singin}>SignIn</button>
+          <button className="singin1" onClick={singout}>SignUp</button>
         </div>
-        <div className="service-card">
-          <img src={require("../images/volunteer-coordinator.jpg")} alt="Volunteer Coordination" />
-          <h3>Volunteer coordination</h3>
-          <p>Become a vital part of our logistics network.</p>
+        <div className="ac-card">
+          <img src={require("../images/dele.jpg")} alt="Volunteer Coordination" />
+          <h3>Volunteer Account Type</h3>
+          <button className="singin1" onClick={singin1}>SignIn</button>
+          <button className="singin1" onClick={singout1}>SignUp</button>
         </div>
-        <div className="service-card">
-          <img src={require("../images/realtime.jpg")} alt="Real-Time Tracking" />
-          <h3>Real-Time tracking and analytics</h3>
-          <p>Stay informed with our advanced tracking system.</p>
+        <div className="ac-card">
+          <img src={require("../images/NGO.jpeg")} alt="Real-Time Tracking" />
+          <h3>Recipient Account Type</h3>
+          <button className="singin1" onClick={singin}>SignIn</button>
+          <button className="singin1" onClick={singout}>SignUp</button>
         </div>
       </div>
 
@@ -104,4 +122,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default AccountType;

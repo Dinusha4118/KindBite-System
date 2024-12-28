@@ -22,13 +22,9 @@ const Homepage = () => {
     navigate("/HowItWorks");
   }
 
-  const singin = () => {
-     navigate("/login")
-  }
+  const goToAc = () => {navigate("/AccountType")}
 
-  const singout= () => {
-    navigate("/Register")
-  }
+  
   return (
     <div className="homepage">
       {/* Navbar */}
@@ -47,8 +43,7 @@ const Homepage = () => {
             <li><a href="#blog-feed">Blog Feed</a></li>
           </ul>
         </nav>
-        <button className="singin" onClick={singin}>SignIn</button>
-        <button className="singup" onClick={singout}>SignUp</button>
+        <button className="singin" onClick={goToAc}>Select Account Type</button>
         <a href="#contact" className="contact-button">Contact</a>
       </header>
 
