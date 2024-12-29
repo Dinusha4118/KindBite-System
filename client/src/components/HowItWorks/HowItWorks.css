@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
   }
   
   /* Navbar Styling */
@@ -24,12 +25,14 @@
     list-style: none;
     display: flex;
     gap: 20px;
+    cursor: pointer;
   }
   
   .nav-links li a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
+    cursor: pointer;
   }
   
   .singin, .singup {
@@ -38,6 +41,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     font-weight: bold;
+    cursor: pointer;
   }
 
   .contact-button {
@@ -47,6 +51,7 @@
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+    cursor:pointer;
   }
   
   .contact-button:hover {
@@ -56,7 +61,7 @@
   .title {
     font-family: 'Times New Roman', Times, serif;
     font-size: 28px;
-    color: rgb(95, 181, 10);
+    color: rgb(22, 22, 22);
     border-color: #121111;
     text-shadow: #121111;
     margin-bottom: 5%;
@@ -66,29 +71,33 @@
   /* How It Works Section */
   .how-it-works {
     text-align: center;
-    padding: 50px 20px;
-    background-color: #fffefe;
+    padding: 40px 20px;
+    background-color: #e2e1e1;
   }
   
   .how-it-works-content {
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 90px;
     padding: opx;
   }
   
   .how-it-works-item {
     background-color: white;
-    padding: 10px 10px 10px 10px;
+    padding: 20px;
     box-sizing:content-box;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
+    width: 30%;
+    height:auto;
+    border-style:groove;
   }
 
   .how-it-works-image {
-    width: 40%;
+    width: 70%;
     height: auto;
     border-radius: 7%;
+    padding: 10px 10px;
   }
   
   /* Popup Overlay */
@@ -156,15 +165,19 @@
 
   .learn-more {
     display: inline-block;
-    background: #ff6f61;
-    color: rgb(255, 255, 255);
-    border: none;
+    background: #e8e7e7;
+    color: rgb(0, 0, 0);
+    border:#121111;
     padding: 10px 20px;
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease;
+    border-style: double;
+  }
+
+  .learn-more:hover {
+    background-color: #e85b50;
   }
   
   .view-more-button {

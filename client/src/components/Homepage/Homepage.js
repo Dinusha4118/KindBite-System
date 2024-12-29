@@ -34,7 +34,7 @@ const Homepage = () => {
         </div>
         <nav>
           <ul className="nav-links">
-            <li><a href="home">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><span onClick={goToAbout} className="nav-link-button">About</span></li>
             <li><span onClick={goToServices} className="nav-link-button">Services</span></li>
             <li><span onClick={goToTeem} className="nav-link-button">Teem</span></li>
