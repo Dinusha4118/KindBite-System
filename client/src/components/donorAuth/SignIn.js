@@ -2,24 +2,31 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import './Auth.css';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'; // Import for navigation
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('http://localhost:5000/api/signin', { email, password });
-        alert(response.data.message);
-      } catch (error) {
-        alert(error.response.data.error);
-      }
-    };
+      const response = await axios.post('http://localhost:5000/api/signin', { email, password });
+      alert(response.data.message);
+
+      // Assuming the API returns `businessName` along with the response
+      const { businessName } = response.data;
+
+      // Navigate to DonorDashboard with email and businessName
+      navigate('/DonorPage', { state: { email, businessName } });
+    } catch (error) {
+      alert(error.response?.data?.error || 'Something went wrong');
+    }
+  };
 
   return (
     <div className={`auth-container ${darkMode ? 'dark' : 'light'}`}>

@@ -7,7 +7,7 @@ import Login from "./Login&Register/Login";
 import Register from "./Login&Register/Register";
 import Teempage from "./components/Teempage/Teempage";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
-import DonorPage from "./components/DonorPage/DonorPage";
+import DonorPage from "./components/DonorPage/DonorDashboard";
 import SignIn from './components/donorAuth/SignIn';
 import SignUp from './components/donorAuth/SignUp';
 import AccountType from './components/AcType/accountType';

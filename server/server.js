@@ -11,10 +11,7 @@ app.use(express.json());
 
 // MongoDB Connection
 mongoose
-  .connect(
-    'mongodb+srv://dinushadeshan70:Wijewardana123@kindbite.ubptw.mongodb.net/?authSource=Wijewardana123&authMechanism=SCRAM-SHA-1',
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('MongoDB connection error:', error));
 
@@ -30,6 +27,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 // Routes
+// Signup Route
 app.post('/api/signup', async (req, res) => {
   const { businessName, email, password, location, foodType } = req.body;
 
@@ -47,6 +45,8 @@ app.post('/api/signup', async (req, res) => {
   }
 });
 
+
+// Sign-in Route
 app.post('/api/signin', async (req, res) => {
   const { email, password } = req.body;
 
@@ -57,12 +57,22 @@ app.post('/api/signin', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, message: 'Sign-in successful' });
+    // Generate JWT Token
+    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Include businessName in the response
+    res.json({
+      token,
+      message: 'Sign-in successful',
+      email: user.email,
+      businessName: user.businessName, // Added this line
+    });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
+
 // Start Server
-app.listen(5000, () => console.log('Server running on port 5000'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
