@@ -26,7 +26,22 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// Food Donation Schema
+const donationSchema = new mongoose.Schema({
+  businessName: { type: String, required: true },
+  email: { type: String, required: true },
+  foodType: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  expirationDate: { type: Date, required: true },
+  location: { type: String, required: true },
+});
+
+const Donation = mongoose.model('Donation', donationSchema);
+
+
+
 // Routes
+
 // Signup Route
 app.post('/api/signup', async (req, res) => {
   const { businessName, email, password, location, foodType } = req.body;
@@ -45,7 +60,6 @@ app.post('/api/signup', async (req, res) => {
   }
 });
 
-
 // Sign-in Route
 app.post('/api/signin', async (req, res) => {
   const { email, password } = req.body;
@@ -60,15 +74,58 @@ app.post('/api/signin', async (req, res) => {
     // Generate JWT Token
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Include businessName in the response
     res.json({
       token,
       message: 'Sign-in successful',
       email: user.email,
-      businessName: user.businessName, // Added this line
+      businessName: user.businessName,
     });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Add Food Donation Route
+app.post('/api/donations', async (req, res) => {
+  try {
+    const { businessName, email, foodType, quantity, expirationDate, location } = req.body;
+
+    if (!businessName || !email || !foodType || !quantity || !location || !expirationDate) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+    if (quantity <= 0) {
+      return res.status(400).json({ error: "Quantity must be a positive number." });
+    }
+    if (new Date(expirationDate) <= new Date()) {
+      return res.status(400).json({ error: "Expiration date must be in the future." });
+    }
+
+    const newDonation = new Donation({
+      businessName,
+      email,
+      foodType,
+      quantity,
+      expirationDate,
+      location:location || "Unknown Location", // Fallback if location is not provided
+    });
+
+    await newDonation.save();
+    res.json({ message: "Donation added successfully" });
+  } catch (error) {
+    console.error("Error adding donation:", error);
+    res.status(500).json({ error: "Server error. Please try again later." });
+  }
+});
+
+
+// Get Donations
+app.get('/api/donations', async (req, res) => {
+  try {
+    const donations = await Donation.find();
+    res.json(donations);
+  } catch (error) {
+    console.error("Error fetching donations:", error);
+    res.status(500).json({ error: "Server error. Please try again later." });
   }
 });
 
