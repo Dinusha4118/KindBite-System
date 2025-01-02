@@ -11,6 +11,10 @@ import DonorPage from "./components/DonorPage/DonorDashboard";
 import SignIn from './components/donorAuth/SignIn';
 import SignUp from './components/donorAuth/SignUp';
 import AccountType from './components/AcType/accountType';
+import SignupForm from "./components/SignupForm/SignupForm"; // Import SignupForm for recipients
+import SigninForm from "./components/SignupForm/SigninForm"; // Import SigninForm for recipients
+
+
 
 
 import "./App.css";
@@ -31,6 +35,10 @@ const App = () => {
         <Route path="/AccountType" element={<AccountType />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        {/* Recipient routes */}
+        <Route path="/recipient-signin" element={<SigninForm />} />
+        <Route path="/recipient-signup" element={<SignupForm />} />
+
 
       </Routes>
     </Router>

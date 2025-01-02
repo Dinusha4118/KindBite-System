@@ -29,7 +29,9 @@ const SignIn = () => {
   };
 
   return (
+    
     <div className={`auth-container ${darkMode ? 'dark' : 'light'}`}>
+     
       <motion.div
         className="auth-card"
         initial={{ opacity: 0, y: -50 }}
@@ -69,7 +71,9 @@ const SignIn = () => {
           Toggle {darkMode ? 'Light' : 'Dark'} Mode
         </div>
       </motion.div>
-    </div>
+      </div>
+   
+   
   );
 };
 

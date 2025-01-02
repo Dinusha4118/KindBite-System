@@ -38,6 +38,14 @@ const AccountType = () => {
  const singout1 = () => {
     navigate("/Register")
  }
+
+ const singToIn = () => {
+  navigate("/recipient-signin")
+}
+
+const singToUp = () => {
+  navigate("/recipient-signup")
+}
  
 
   return (
@@ -85,8 +93,8 @@ const AccountType = () => {
         <div className="ac-card">
           <img src={require("../images/NGO.jpeg")} alt="Real-Time Tracking" />
           <h3>Recipient Account Type</h3>
-          <button className="singin1" onClick={singin}>SignIn</button>
-          <button className="singin1" onClick={singout}>SignUp</button>
+          <button className="singin1" onClick={singToIn}>SignIn</button>
+          <button className="singin1" onClick={singToUp}>SignUp</button>
         </div>
       </div>
 

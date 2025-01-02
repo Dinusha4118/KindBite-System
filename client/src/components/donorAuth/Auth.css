@@ -1,16 +1,21 @@
 /* General Styling */
+
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    
   }
   
   .auth-container {
-    display: flex;
-    justify-content: center;
+    display:flex;
+    justify-content:center;
     align-items: center;
     height: 100vh;
     transition: background-color 0.3s ease;
+    background-color: #457b9d;
+    
   }
+
   
   .auth-container.light {
     background-color: #f9f9f9;

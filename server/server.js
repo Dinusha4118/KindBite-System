@@ -17,14 +17,30 @@ mongoose
 
 // User Schema
 const userSchema = new mongoose.Schema({
-  businessName: String,
+  userType: { type: String, enum: ['Business', 'Recipient'], required: true }, // Add userType
+  businessName: String, // For businesses
+  organizationName: String, // For recipients
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   location: String,
-  foodType: String,
+  foodType: String, // Only for recipients specifying needed food
 });
 
 const User = mongoose.model('User', userSchema);
+
+//recipiant
+const recipientSchema = new mongoose.Schema({
+  userType: { type: String, enum: ['Business', 'Recipient'], required: true }, // Add userType
+  businessName: String, // For businesses
+  organizationName: String, // For recipients
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  location: String,
+  foodType: String, // Only for recipients specifying needed food
+});
+
+const RecipientUser = mongoose.model('RecipientUser', recipientSchema);
+
 
 // Food Donation Schema
 const donationSchema = new mongoose.Schema({
@@ -126,6 +142,59 @@ app.get('/api/donations', async (req, res) => {
   } catch (error) {
     console.error("Error fetching donations:", error);
     res.status(500).json({ error: "Server error. Please try again later." });
+  }
+});
+
+// Recipient Signup Route
+app.post('/api/recipient/signup', async (req, res) => {
+  const { organizationName, email, password, location, foodType } = req.body;
+
+  try {
+    const existingRecipientUser = await RecipientUser.findOne({ email });
+    if (existingRecipientUser) return res.status(400).json({ error: 'Email already in use' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newRecipientUser = new RecipientUser({
+      userType: 'Recipient',
+      organizationName,
+      email,
+      password: hashedPassword,
+      location,
+      foodType,
+    });
+
+    await newRecipientUser.save(); // Save the correct object here
+
+    res.json({ message: 'Recipient registered successfully' });
+  } catch (error) {
+    console.error('Error during recipient signup:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+// Recipient Sign-in Route
+app.post('/api/recipient/signin', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const recipientUser = await RecipientUser.findOne({ email, userType: 'Recipient' });
+    if (!recipientUser) return res.status(400).json({ error: 'Recipient not found' });
+
+    const isMatch = await bcrypt.compare(password, recipientUser.password);
+    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
+
+    // Generate JWT Token
+    const token = jwt.sign({ id: recipientUser._id, email: recipientUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({
+      token,
+      message: 'Sign-in successful',
+      email: recipientUser.email,
+      organizationName: recipientUser.organizationName,
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
