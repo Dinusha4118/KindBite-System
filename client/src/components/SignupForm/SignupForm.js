@@ -22,6 +22,7 @@ const SignupForm = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/recipient/signup", formData);
       setMessage(response.data.message);
+      
     } catch (error) {
       setMessage(error.response?.data?.error || "Signup failed");
     }

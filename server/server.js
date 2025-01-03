@@ -17,9 +17,7 @@ mongoose
 
 // User Schema
 const userSchema = new mongoose.Schema({
-  userType: { type: String, enum: ['Business', 'Recipient'], required: true }, // Add userType
   businessName: String, // For businesses
-  organizationName: String, // For recipients
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   location: String,
@@ -54,6 +52,17 @@ const donationSchema = new mongoose.Schema({
 
 const Donation = mongoose.model('Donation', donationSchema);
 
+// Recipient Requirement Schema
+const recipientRequirementSchema = new mongoose.Schema({
+  foodNeeded: { type: String, required: true },
+  location: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  mobileNumber: { type: String, required: true },
+  countryCode: { type: String, required: true },
+  submittedAt: { type: Date, default: Date.now },
+});
+
+const RecipientRequirement = mongoose.model("RecipientRequirement", recipientRequirementSchema);
 
 
 // Routes
@@ -63,16 +72,36 @@ app.post('/api/signup', async (req, res) => {
   const { businessName, email, password, location, foodType } = req.body;
 
   try {
+    // Check if the email already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ error: 'Email already in use' });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email already registered.' });
+    }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ businessName, email, password: hashedPassword, location, foodType });
+
+    // Create a new user
+    const newUser = new User({
+      businessName,
+      email,
+      password: hashedPassword,
+      location,
+      foodType,
+    });
+
     await newUser.save();
 
-    res.json({ message: 'User registered successfully' });
+    // Generate a token (optional)
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(201).json({
+      message: 'User created successfully',
+      token,
+    });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error('Error during signup:', error);
+    res.status(500).json({ error: 'Server error. Please try again later.' });
   }
 });
 
@@ -145,6 +174,9 @@ app.get('/api/donations', async (req, res) => {
   }
 });
 
+
+
+
 // Recipient Signup Route
 app.post('/api/recipient/signup', async (req, res) => {
   const { organizationName, email, password, location, foodType } = req.body;
@@ -164,6 +196,7 @@ app.post('/api/recipient/signup', async (req, res) => {
     });
 
     await newRecipientUser.save(); // Save the correct object here
+
 
     res.json({ message: 'Recipient registered successfully' });
   } catch (error) {
@@ -197,6 +230,32 @@ app.post('/api/recipient/signin', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+// Submit Requirements Route
+app.post("/api/recipient/submit", async (req, res) => {
+  const { foodNeeded, location, quantity, mobileNumber, countryCode } = req.body;
+
+  if (!foodNeeded || !location || !quantity || !mobileNumber || !countryCode) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    const newRequirement = new RecipientRequirement({
+      foodNeeded,
+      location,
+      quantity,
+      mobileNumber,
+      countryCode,
+    });
+
+    await newRequirement.save();
+    res.json({ message: "Requirement submitted successfully!" });
+  } catch (error) {
+    console.error("Error saving requirement:", error);
+    res.status(500).json({ error: "Server error. Please try again later." });
+  }
+});
+
 
 
 // Start Server

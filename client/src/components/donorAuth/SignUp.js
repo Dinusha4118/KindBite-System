@@ -32,16 +32,19 @@ const SignUp = () => {
         },
         body: JSON.stringify(formData),
       });
+  
       const data = await response.json();
       if (response.ok) {
         alert('Sign-up successful!');
       } else {
-        alert(data.error || 'Sign-up failed.');
+        alert(data.error || 'Sign-up failed. Please check the details and try again.');
       }
     } catch (error) {
-      alert('An error occurred. Please try again.');
+      console.error('Error during sign-up:', error);
+      alert('An error occurred while connecting to the server. Please try again later.');
     }
   };
+  
 
   return (
     <div className={`auth-container ${darkMode ? 'dark' : 'light'}`}>
