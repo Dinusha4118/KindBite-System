@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f5f5;
+    background: #cadee5;
   }
   
   .dashboard {
@@ -186,17 +186,51 @@ body {
   }
 
   .header {
-     display: flex;
-     color: #000602;
-     background-color: #d4e2e7;
-     padding: 40px 20px;
-     margin-bottom: 40px;
-     width: 100%;
-     height: 0%;
-     left: 0%;
-     top: 0%;
-     right: auto;
-     margin-right: 100% ;
-     position:relative;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d4e2e7;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 102%;
+    margin-right: 30%;
+    height: 10%;
+    right: 2%;
+    bottom: 40%;
+  }
+  
+  .signout-button {
+    background-color: #e21a1a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .signout-button:hover {
+    background-color: #c11717;
+  }
+  
+  .header-text {
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .header-text h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 24px;
+    color: #000602;
+    margin: 0;
+  }
+  
+  .header-text h3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    color: #e21a1a;
+    margin: 5px 0 0;
   }
   

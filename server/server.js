@@ -64,7 +64,16 @@ const recipientRequirementSchema = new mongoose.Schema({
 
 const RecipientRequirement = mongoose.model("RecipientRequirement", recipientRequirementSchema);
 
+const requestSchema = new mongoose.Schema({
+  foodType:  String,
+  quantity:  Number,
+  location:  String,
+  organizationName:  String,
+  requestDate: { type: Date, default: Date.now },
+  status: { type: String, default: "Pending" },
+});
 
+const Request = mongoose.model("Request", requestSchema); 
 // Routes
 
 // Signup Route
@@ -255,6 +264,42 @@ app.post("/api/recipient/submit", async (req, res) => {
     res.status(500).json({ error: "Server error. Please try again later." });
   }
 });
+
+
+// Create a request
+app.post("/api/requests", async (req, res) => {
+  try {
+    const newRequest = new Request(req.body);
+    await newRequest.save();
+    res.json({ message: "Request sent successfully!" });
+  } catch (error) {
+    res.status(500).json({ error: "Error creating request." });
+  }
+});
+
+// Fetch requests
+app.get("/api/requests", async (req, res) => {
+  try {
+    const requests = await Request.find();
+    res.json(requests);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching requests." });
+  }
+});
+
+// Update request status
+app.post("/api/requests/:id/:action", async (req, res) => {
+  const { id, action } = req.params;
+  const status = action === "accept" ? "Accepted" : "Rejected";
+
+  try {
+    await Request.findByIdAndUpdate(id, { status });
+    res.json({ message: `Request ${status.toLowerCase()} successfully.` });
+  } catch (error) {
+    res.status(500).json({ error: `Error updating request status to ${status}.` });
+  }
+});
+
 
 
 

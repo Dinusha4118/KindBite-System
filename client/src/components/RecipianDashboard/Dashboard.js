@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const [donations, setDonations] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize navigate
   const { email, organizationName } = location.state || {};
   const [notifications, setNotifications] = useState([]);
   const [formData, setFormData] = useState({
@@ -28,8 +29,6 @@ const Dashboard = () => {
       .get("http://localhost:5000/api/notifications")
       .then((response) => setNotifications(response.data))
       .catch((error) => console.error("Error fetching notifications:", error));
-
-   
   }, []);
 
   const validateForm = () => {
@@ -55,19 +54,6 @@ const Dashboard = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleRequest = (donationId) => {
-    if (!donationId) {
-      setMessage("Invalid donation selected.");
-      return;
-    }
-    axios
-      .post("http://localhost:5000/api/request", { donationId })
-      .then((response) => setMessage(response.data.message))
-      .catch((error) => {
-        console.error("Error requesting food:", error);
-        setMessage("Error requesting food. Please try again.");
-      });
-  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -99,16 +85,44 @@ const Dashboard = () => {
       });
   };
 
+  const handleRequest = (donation) => {
+    const requestData = {
+      foodType: donation.foodType,
+      quantity: donation.quantity,
+      location: donation.location,
+      organizationName,
+      requestDate: new Date().toISOString(),
+    };
+
+    axios
+      .post("http://localhost:5000/api/requests", requestData)
+      .then((response) => setMessage(response.data.message))
+      .catch((error) => {
+        console.error("Error requesting food:", error);
+        setMessage("Error sending request. Please try again.");
+      });
+  };
+
+
+  const handleSignOut = () => {
+    navigate("/AccountType"); // Navigate to "AccountType" page
+  };
+
   return (
     <div className="dashboard">
       <header className="header">
-      <h1 className="he">Welcome {organizationName || "Donor"} to the Recipient Portal</h1>
-      <h3 className="he1">Your Email is {email}</h3>
-    </header>
+        <button className="signout-button" onClick={handleSignOut}>
+          SIGNOUT
+        </button>
+        <div className="header-text">
+          <h1>Welcome {organizationName || "Donor"} to the Recipient Portal</h1>
+          <h3>Your Email is {email}</h3>
+        </div>
+      </header>
       <br></br>
       <br></br>
       <div className="features-container">
-        <section>
+      <section>
           <h2>Request Food</h2>
           <table className="donations-table">
             <thead>
@@ -209,10 +223,8 @@ const Dashboard = () => {
       </div>
       <br></br>
       <br></br>
-      <br></br>
-      <br></br>
       <footer className="footer2">
-        <div className="footer2-content">
+      <div className="footer2-content">
           <div className="footer2-section about">
             <h2>About KINDBITE</h2>
             <p>

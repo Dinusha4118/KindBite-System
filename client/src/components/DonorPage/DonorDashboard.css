@@ -245,3 +245,84 @@
   .footer1-bottom p {
     margin: 0;
   }
+
+  .requests-section {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    max-width: 1200px;
+  }
+  
+  .requests-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+  
+  .requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    margin: 0 auto;
+  }
+  
+  .requests-table thead {
+    background-color: #f5f5f5;
+  }
+  
+  .requests-table th,
+  .requests-table td {
+    text-align: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .requests-table th {
+    font-weight: bold;
+    color: #555555;
+  }
+  
+  .requests-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .accept-button,
+  .reject-button {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .accept-button {
+    background-color: #28a745;
+    color: #ffffff;
+  }
+  
+  .accept-button:hover {
+    background-color: #218838;
+  }
+  
+  .reject-button {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+  
+  .reject-button:hover {
+    background-color: #c82333;
+  }
+  
+  .message {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 16px;
+    color: #007bff;
+    font-weight: bold;
+  }
+  

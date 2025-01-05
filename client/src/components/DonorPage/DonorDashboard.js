@@ -4,9 +4,11 @@ import "./DonorDashboard.css";
 
 const DonorDashboard = () => {
   const location = useLocation();
+  const [requests, setRequests] = useState([]);
   const { email, businessName } = location.state || {};
   const [signout, setSignout] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [message, setMessage] = useState("");
   const [donationDetails, setDonationDetails] = useState({
     foodName: "",
     quantity: "",
@@ -19,6 +21,42 @@ const DonorDashboard = () => {
     "Your donation '20 Sandwiches' was picked up by Alex.",
     "New request for 10 bags of fruit received.",
   ]);
+
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/requests");
+        if (response.ok) {
+          const data = await response.json();
+          setRequests(data);
+        } else {
+          console.error("Failed to fetch requests.");
+        }
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
+    fetchRequests();
+  }, []);
+
+  const handleAction = async (requestId, action) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/requests/${requestId}/${action}`,
+        { method: "POST" }
+      );
+      if (response.ok) {
+        setMessage(`Request ${action}ed successfully.`);
+        setRequests(requests.filter((req) => req._id !== requestId));
+      } else {
+        console.error("Failed to process action.");
+      }
+    } catch (error) {
+      console.error("Error processing action:", error);
+    }
+  };
+
 
   // Fetch Donation History
   useEffect(() => {
@@ -158,6 +196,48 @@ const DonorDashboard = () => {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="requests-section">
+        <h2>Recipient Requests</h2>
+        <table className="requests-table">
+          <thead>
+            <tr>
+              <th>Food Type</th>
+              <th>Quantity</th>
+              <th>Location</th>
+              <th>Organization</th>
+              <th>Request Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {requests.map((request) => (
+              <tr key={request._id}>
+                <td>{request.foodType}</td>
+                <td>{request.quantity}</td>
+                <td>{request.location}</td>
+                <td>{request.organizationName}</td>
+                <td>{new Date(request.requestDate).toLocaleDateString()}</td>
+                <td>
+                  <button
+                    className="accept-button"
+                    onClick={() => handleAction(request._id, "accept")}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="reject-button"
+                    onClick={() => handleAction(request._id, "reject")}
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {message && <p className="message">{message}</p>}
       </section>
 
       {showPopup && (
