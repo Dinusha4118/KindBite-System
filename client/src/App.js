@@ -14,11 +14,12 @@ import AccountType from './components/AcType/accountType';
 import SignupForm from "./components/SignupForm/SignupForm"; // Import SignupForm for recipients
 import SigninForm from "./components/SignupForm/SigninForm"; // Import SigninForm for recipients
 import Dashboard from "./components/RecipianDashboard/Dashboard"; 
+import Vol from "./components/Voluntear/VolunteerHome";
+
 
 
 
 import "./App.css";
-
 
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/vol" element={<Vol />} />
         {/* Recipient routes */}
         <Route path="/recipient-signin" element={<SigninForm />} />
         <Route path="/recipient-signup" element={<SignupForm />} />
