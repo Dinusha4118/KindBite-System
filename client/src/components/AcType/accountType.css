@@ -2,6 +2,8 @@
     padding: 0px;
     text-align: center;
     background-image:url("../images/accountype back.jpg");
+    width: 100%;
+    height: auto;
   }
 
 .navbar {
@@ -151,9 +153,11 @@
 .footer1 {
     background-color: #333;
     color: white;
-    padding: 40px 20px;
+    padding: 50px 20px;
     margin-top: 30px;
     width:100%;
+    height:auto;
+    
   }
   
   .footer-content {

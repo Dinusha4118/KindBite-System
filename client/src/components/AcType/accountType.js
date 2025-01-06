@@ -97,7 +97,6 @@ const singToUp = () => {
           <button className="singin1" onClick={singToUp}>SignUp</button>
         </div>
       </div>
-
       {/* Footer */}
       <footer className="footer1">
       <div className="footer-content">

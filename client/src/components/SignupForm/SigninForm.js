@@ -21,10 +21,10 @@ const SigninForm = () => {
       alert(response.data.message);
 
        // Assuming the API returns `businessName` along with the response
-       const { Recipient } = response.data;
+       const { organizationName } = response.data;
 
        // Navigate to DonorDashboard with email and businessName
-       navigate('/Dashboard', { state: { email, Recipient } });
+       navigate('/Dashboard', { state: { email, organizationName } });
       
     } catch (error) {
       setMessage(error.response?.data?.error || "Signin failed");

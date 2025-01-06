@@ -86,23 +86,29 @@ const Dashboard = () => {
   };
 
   const handleRequest = (donation) => {
+    if (!organizationName) {
+      setMessage("Error: Organization name is missing.");
+      return;
+    }
+
     const requestData = {
       foodType: donation.foodType,
       quantity: donation.quantity,
       location: donation.location,
       organizationName,
-      requestDate: new Date().toISOString(),
     };
 
     axios
       .post("http://localhost:5000/api/requests", requestData)
-      .then((response) => setMessage(response.data.message))
+      .then((response) => {
+        setMessage(response.data.message);
+      })
       .catch((error) => {
         console.error("Error requesting food:", error);
         setMessage("Error sending request. Please try again.");
       });
   };
-
+  
 
   const handleSignOut = () => {
     navigate("/AccountType"); // Navigate to "AccountType" page
@@ -115,7 +121,7 @@ const Dashboard = () => {
           SIGNOUT
         </button>
         <div className="header-text">
-          <h1>Welcome {organizationName || "Donor"} to the Recipient Portal</h1>
+          <h1>Welcome {organizationName } to the Recipient Portal</h1>
           <h3>Your Email is {email}</h3>
         </div>
       </header>
@@ -134,22 +140,23 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {donations.map((donation) => (
-                <tr key={donation._id}>
+               {donations.map((donation) => (
+                 <tr key={donation._id}>
                   <td>{donation.foodType}</td>
                   <td>{donation.quantity}</td>
                   <td>{donation.location}</td>
-                  <td>
-                    <button
-                      className="request-button"
-                      onClick={() => handleRequest(donation._id)}
-                    >
-                      Request
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                <td>
+                <button
+                   className="request-button"
+                   onClick={() => handleRequest(donation)} // Pass the whole donation object
+                >
+          Request
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
         </section>
 

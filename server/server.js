@@ -65,15 +65,15 @@ const recipientRequirementSchema = new mongoose.Schema({
 const RecipientRequirement = mongoose.model("RecipientRequirement", recipientRequirementSchema);
 
 const requestSchema = new mongoose.Schema({
-  foodType:  String,
-  quantity:  Number,
-  location:  String,
-  organizationName:  String,
+  foodType: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  location: { type: String, required: true },
+  organizationName: { type: String, required: true },
   requestDate: { type: Date, default: Date.now },
   status: { type: String, default: "Pending" },
 });
 
-const Request = mongoose.model("Request", requestSchema); 
+const Request = mongoose.model("Request", requestSchema);
 // Routes
 
 // Signup Route
@@ -265,14 +265,20 @@ app.post("/api/recipient/submit", async (req, res) => {
   }
 });
 
-
 // Create a request
 app.post("/api/requests", async (req, res) => {
   try {
+    const { foodType, quantity, location, organizationName } = req.body;
+
+    if (!foodType || !quantity || !location || !organizationName) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
     const newRequest = new Request(req.body);
     await newRequest.save();
     res.json({ message: "Request sent successfully!" });
   } catch (error) {
+    console.error("Error creating request:", error);
     res.status(500).json({ error: "Error creating request." });
   }
 });
@@ -283,8 +289,14 @@ app.get("/api/requests", async (req, res) => {
     const requests = await Request.find();
     res.json(requests);
   } catch (error) {
+    console.error("Error fetching requests:", error);
     res.status(500).json({ error: "Error fetching requests." });
   }
+});
+
+// Mock /api/notifications endpoint to prevent 404 errors
+app.get("/api/notifications", (req, res) => {
+  res.json([]); // Return an empty array for now
 });
 
 // Update request status
@@ -296,10 +308,10 @@ app.post("/api/requests/:id/:action", async (req, res) => {
     await Request.findByIdAndUpdate(id, { status });
     res.json({ message: `Request ${status.toLowerCase()} successfully.` });
   } catch (error) {
+    console.error(`Error updating request status to ${status}:`, error);
     res.status(500).json({ error: `Error updating request status to ${status}.` });
   }
 });
-
 
 
 
