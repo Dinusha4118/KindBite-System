@@ -17,11 +17,11 @@ const DonorDashboard = () => {
     expirationTime: "",
   });
   const [donationHistory, setDonationHistory] = useState([]);
+  const [editingDonation, setEditingDonation] = useState(null);
   const [notifications] = useState([
     "Your donation '20 Sandwiches' was picked up by Alex.",
     "New request for 10 bags of fruit received.",
   ]);
-
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -38,27 +38,12 @@ const DonorDashboard = () => {
       }
     };
     fetchRequests();
+    
+    const interval = setInterval(fetchRequests, 2000); // Fetch every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
-  const handleAction = async (requestId, action) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/requests/${requestId}/${action}`,
-        { method: "POST" }
-      );
-      if (response.ok) {
-        setMessage(`Request ${action}ed successfully.`);
-        setRequests(requests.filter((req) => req._id !== requestId));
-      } else {
-        console.error("Failed to process action.");
-      }
-    } catch (error) {
-      console.error("Error processing action:", error);
-    }
-  };
-
-
-  // Fetch Donation History
   useEffect(() => {
     const fetchDonations = async () => {
       try {
@@ -74,76 +59,135 @@ const DonorDashboard = () => {
       }
     };
     fetchDonations();
-  }, []);
+    const interval = setInterval(fetchDonations, 2000); // Fetch every 3 seconds
 
-  const handleSignout = () => {
-    setSignout(true);
-  };
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setDonationDetails({ ...donationDetails, [name]: value });
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/donations/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setDonationHistory(donationHistory.filter((donation) => donation._id !== id));
+        alert("Donation deleted successfully!");
+      } else {
+        alert("Failed to delete donation.");
+      }
+    } catch (error) {
+      console.error("Error deleting donation:", error);
+    }
+  };
+
+  const handleEdit = (donation) => {
+    setDonationDetails({
+      foodName: donation.foodType,
+      quantity: donation.quantity,
+      type: donation.type,
+      location: donation.location,
+      expirationTime: new Date(donation.expirationDate).toISOString().slice(0, 16),
+    });
+    setEditingDonation(donation._id);
+    setShowPopup(true);
+  };
+
   const handlePopupSubmit = async () => {
     const { foodName, quantity, type, location, expirationTime } = donationDetails;
 
-    // Input Validation
-    if (!foodName || foodName.trim() === "") {
-      alert("Food name is required.");
-      return;
-    }
-    if (!quantity || isNaN(quantity) || Number(quantity) <= 0) {
-      alert("Quantity must be a positive number.");
-      return;
-    }
-    if (!type || type.trim() === "") {
-      alert("Food type is required.");
-      return;
-    }
-    if (!expirationTime || new Date(expirationTime) <= new Date()) {
-      alert("Expiration time must be a future date and time.");
+    if (!foodName || !quantity || !type || !expirationTime) {
+      alert("All fields are required.");
       return;
     }
 
+    const url = editingDonation
+      ? `http://localhost:5000/api/donations/${editingDonation}`
+      : "http://localhost:5000/api/donations";
+    const method = editingDonation ? "PUT" : "POST";
+
     try {
-      const response = await fetch("http://localhost:5000/api/donations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           foodType: foodName,
           quantity: Number(quantity),
           type,
+          location,
           expirationDate: new Date(expirationTime).toISOString(),
           businessName,
           email,
-          location: location || "Unknown Location",
         }),
       });
 
       if (response.ok) {
-        alert("Donation added successfully!");
-        const newDonation = await response.json();
-        setDonationHistory((prev) => [...prev, newDonation]);
+        if (editingDonation) {
+          setDonationHistory(
+            donationHistory.map((donation) =>
+              donation._id === editingDonation
+                ? { ...donation, foodType: foodName, quantity, type, location, expirationDate: expirationTime }
+                : donation
+            )
+          );
+          alert("Donation updated successfully!");
+        } else {
+          alert("Donation added successfully!");
+        }
+        setEditingDonation(null);
         setShowPopup(false);
-        setDonationDetails({
-          foodName: "",
-          quantity: "",
-          type: "",
-          location: "",
-          expirationTime: "",
-        });
+        setDonationDetails({ foodName: "", quantity: "", type: "", location: "", expirationTime: "" });
+        window.location.reload(); // Auto-reload the window after adding/updating a donation
       } else {
-        const errorData = await response.json();
-        alert(`Failed to add donation: ${errorData.error}`);
+        alert("Failed to submit donation.");
       }
     } catch (error) {
       console.error("Error submitting donation:", error);
-      alert("Error submitting donation. Please try again later.");
     }
   };
+
+  const handleSignout = () => {
+    setSignout(true);
+  };
+
+  const handleAction = async (requestId, action) => {
+    try {
+      // Find the specific request by ID to get the food type
+      const request = requests.find((req) => req._id === requestId);
+  
+      if (!request) {
+        console.error("Request not found.");
+        return;
+      }
+  
+      const response = await fetch(`http://localhost:5000/api/requests/${requestId}/${action}`, {
+        method: "POST",
+      });
+  
+      if (response.ok) {
+        // Send notification message to the backend
+        await fetch("http://localhost:5000/api/notifications", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: `Request for "${request.foodType}" was ${action === "accept" ? "approved" : "rejected"}.`,
+          }),
+        });
+  
+        setMessage(`Request for "${request.foodType}" ${action}ed successfully.`);
+        setRequests(requests.filter((req) => req._id !== requestId)); // Remove request from UI
+      } else {
+        console.error("Failed to process action.");
+      }
+    } catch (error) {
+      console.error("Error processing action:", error);
+    }
+  };
+  
 
   if (signout) {
     return <Navigate to="/" />;
@@ -181,7 +225,8 @@ const DonorDashboard = () => {
                 <th>Item</th>
                 <th>Quantity</th>
                 <th>Date</th>
-                <th>Recipient</th>
+                <th>Donor Name</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -191,6 +236,11 @@ const DonorDashboard = () => {
                   <td>{donation.quantity}</td>
                   <td>{new Date(donation.expirationDate).toLocaleDateString()}</td>
                   <td>{donation.businessName}</td>
+                  <td>
+                    <button onClick={() => handleEdit(donation)}>Edit</button>
+                    <br></br>
+                    <button onClick={() => handleDelete(donation._id)}>Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -241,6 +291,43 @@ const DonorDashboard = () => {
       </section>
 
       {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <h3>{editingDonation ? "Edit Donation" : "Add Donation"}</h3>
+            <input
+              type="text"
+              name="foodName"
+              placeholder="Food Name"
+              value={donationDetails.foodName}
+              onChange={(e) => setDonationDetails({ ...donationDetails, foodName: e.target.value })}
+            />
+            <input
+              type="number"
+              name="quantity"
+              placeholder="Quantity"
+              value={donationDetails.quantity}
+              onChange={(e) => setDonationDetails({ ...donationDetails, quantity: e.target.value })}
+            />
+            <input
+              type="text"
+              name="type"
+              placeholder="Type"
+              value={donationDetails.type}
+              onChange={(e) => setDonationDetails({ ...donationDetails, type: e.target.value })}
+            />
+            <input
+              type="datetime-local"
+              name="expirationTime"
+              value={donationDetails.expirationTime}
+              onChange={(e) => setDonationDetails({ ...donationDetails, expirationTime: e.target.value })}
+            />
+            <button onClick={handlePopupSubmit}>{editingDonation ? "Update" : "Submit"}</button>
+            <button onClick={() => setShowPopup(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+{showPopup && (
         <div className="popup-overlay">
           <div className="popup-box">
             <h2>Food Donation Listing</h2>
@@ -303,9 +390,10 @@ const DonorDashboard = () => {
               <button onClick={() => setShowPopup(false)}>Cancel</button>
             </div>
           </div>
-        </div>
-      )}
-       <footer className="footer1">
+          </div>
+        )}
+
+      <footer className="footer1">
         <div className="footer1-content">
           <div className="footer1-section about">
             <h2>About KINDBITE</h2>

@@ -79,19 +79,20 @@ body {
     background-color: #45a049;
   }
   
-  .notifications-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 20px 0;
+ 
+
+  .notification-message {
+    background-color: #acf176;
+    border: 1px solid #34b7f1;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin: 5px 0;
+    max-width: 60%;
+    word-wrap: break-word;
+    align-self: flex-end;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   }
   
-  .notifications-list li {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
 
   /* Footer Styling */
 .footer2 {

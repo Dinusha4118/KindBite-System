@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const [donations, setDonations] = useState([]);
   const location = useLocation();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const { email, organizationName } = location.state || {};
   const [notifications, setNotifications] = useState([]);
   const [formData, setFormData] = useState({
@@ -20,15 +20,23 @@ const Dashboard = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/donations")
-      .then((response) => setDonations(response.data))
-      .catch((error) => console.error("Error fetching donations:", error));
+    const fetchData = () => {
+      axios
+        .get("http://localhost:5000/api/donations")
+        .then((response) => setDonations(response.data))
+        .catch((error) => console.error("Error fetching donations:", error));
 
-    axios
-      .get("http://localhost:5000/api/notifications")
-      .then((response) => setNotifications(response.data))
-      .catch((error) => console.error("Error fetching notifications:", error));
+      axios
+        .get("http://localhost:5000/api/notifications")
+        .then((response) => setNotifications(response.data))
+        .catch((error) => console.error("Error fetching notifications:", error));
+    };
+
+    fetchData(); // Initial fetch
+
+    const interval = setInterval(fetchData, 2000); // Fetch every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   const validateForm = () => {
@@ -53,7 +61,6 @@ const Dashboard = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -108,10 +115,9 @@ const Dashboard = () => {
         setMessage("Error sending request. Please try again.");
       });
   };
-  
 
   const handleSignOut = () => {
-    navigate("/AccountType"); // Navigate to "AccountType" page
+    navigate("/AccountType");
   };
 
   return (
@@ -121,14 +127,14 @@ const Dashboard = () => {
           SIGNOUT
         </button>
         <div className="header-text">
-          <h1>Welcome {organizationName } to the Recipient Portal</h1>
+          <h1>Welcome {organizationName} to the Recipient Portal</h1>
           <h3>Your Email is {email}</h3>
         </div>
       </header>
       <br></br>
       <br></br>
       <div className="features-container">
-      <section>
+        <section>
           <h2>Request Food</h2>
           <table className="donations-table">
             <thead>
@@ -140,23 +146,22 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-               {donations.map((donation) => (
-                 <tr key={donation._id}>
+              {donations.map((donation) => (
+                <tr key={donation._id}>
                   <td>{donation.foodType}</td>
                   <td>{donation.quantity}</td>
                   <td>{donation.location}</td>
-                <td>
-                <button
-                   className="request-button"
-                   onClick={() => handleRequest(donation)} // Pass the whole donation object
-                >
-          Request
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
+                  <td>
+                    <button
+                      className="request-button"
+                      onClick={() => handleRequest(donation)}
+                    >
+                      Request
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </section>
 
@@ -164,7 +169,9 @@ const Dashboard = () => {
           <h2>Notification Alerts</h2>
           <ul className="notifications-list">
             {notifications.map((notification) => (
-              <li key={notification._id}>{notification.message}</li>
+              <li key={notification._id} className="notification-message">
+                {notification.message}
+              </li>
             ))}
           </ul>
         </section>
@@ -231,7 +238,7 @@ const Dashboard = () => {
       <br></br>
       <br></br>
       <footer className="footer2">
-      <div className="footer2-content">
+        <div className="footer2-content">
           <div className="footer2-section about">
             <h2>About KINDBITE</h2>
             <p>

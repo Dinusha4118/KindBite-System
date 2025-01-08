@@ -71,9 +71,18 @@ const requestSchema = new mongoose.Schema({
   organizationName: { type: String, required: true },
   requestDate: { type: Date, default: Date.now },
   status: { type: String, default: "Pending" },
+  createdAt: { type: Date, default: Date.now, index: { expires: "3m" } }, // TTL index
 });
 
 const Request = mongoose.model("Request", requestSchema);
+
+
+const notificationSchema = new mongoose.Schema({
+  message: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now, index: { expires: "3m" } }, // TTL index
+});
+
+const Notification = mongoose.model('Notification', notificationSchema);
 // Routes
 
 // Signup Route
@@ -183,8 +192,38 @@ app.get('/api/donations', async (req, res) => {
   }
 });
 
+// Edit Donation
+app.put("/api/donations/:id", async (req, res) => {
+  const { id } = req.params;
+  const { foodType, quantity, type, location, expirationDate } = req.body;
 
+  try {
+    const updatedDonation = await Donation.findByIdAndUpdate(
+      id,
+      { foodType, quantity, type, location, expirationDate },
+      { new: true }
+    );
+    if (!updatedDonation) return res.status(404).json({ error: "Donation not found." });
+    res.json(updatedDonation);
+  } catch (error) {
+    console.error("Error updating donation:", error);
+    res.status(500).json({ error: "Server error." });
+  }
+});
 
+// Delete Donation
+app.delete("/api/donations/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedDonation = await Donation.findByIdAndDelete(id);
+    if (!deletedDonation) return res.status(404).json({ error: "Donation not found." });
+    res.json({ message: "Donation deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting donation:", error);
+    res.status(500).json({ error: "Server error." });
+  }
+});
 
 // Recipient Signup Route
 app.post('/api/recipient/signup', async (req, res) => {
@@ -295,9 +334,6 @@ app.get("/api/requests", async (req, res) => {
 });
 
 // Mock /api/notifications endpoint to prevent 404 errors
-app.get("/api/notifications", (req, res) => {
-  res.json([]); // Return an empty array for now
-});
 
 // Update request status
 app.post("/api/requests/:id/:action", async (req, res) => {
@@ -310,6 +346,32 @@ app.post("/api/requests/:id/:action", async (req, res) => {
   } catch (error) {
     console.error(`Error updating request status to ${status}:`, error);
     res.status(500).json({ error: `Error updating request status to ${status}.` });
+  }
+});
+
+
+// Add a notification
+
+// Add a notification
+app.post("/api/notifications", async (req, res) => {
+  try {
+    const notification = new Notification({ message: req.body.message });
+    await notification.save();
+    res.status(201).json({ message: "Notification added successfully." });
+  } catch (error) {
+    console.error("Failed to add notification:", error);
+    res.status(500).json({ error: "Failed to add notification." });
+  }
+});
+
+// Get all notifications
+app.get("/api/notifications", async (req, res) => {
+  try {
+    const notifications = await Notification.find();
+    res.status(200).json(notifications);
+  } catch (error) {
+    console.error("Failed to fetch notifications:", error);
+    res.status(500).json({ error: "Failed to fetch notifications." });
   }
 });
 
