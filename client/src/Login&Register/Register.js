@@ -1,35 +1,65 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "./register.css";
+import axios from "axios";
 
 function Register() {
     const [values, setValues] = useState({
         Uname: "",
         email: "",
         password: "",
-        cPassword: ""
+        cPassword: "",
     });
 
     const [errors, setErrors] = useState({});
     const [showPasswordPopup, setShowPasswordPopup] = useState(false);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [profilePic, setProfilePic] = useState(null);
+    const [apiError, setApiError] = useState(""); // State to display API error messages
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setValues({
             ...values,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
-    const handleValidation = (e) => {
-        e.preventDefault(); // Prevent form submission
+    const handleProfilePicChange = (e) => {
+        setProfilePic(e.target.files[0]);
+    };
+
+    const handleValidation = async (e) => {
+        e.preventDefault();
+        setApiError(""); // Clear previous API errors
         const validationErrors = Validation(values);
         setErrors(validationErrors);
 
-        // If there are no errors, navigate to the login page
         if (Object.keys(validationErrors).length === 0) {
-            console.log("Form submitted successfully");
-            navigate("/login"); // Navigate to /login
+            const formData = new FormData();
+            formData.append("username", values.Uname);
+            formData.append("email", values.email);
+            formData.append("password", values.password);
+            if (profilePic) {
+                formData.append("profilePic", profilePic);
+            }
+
+            try {
+                const response = await axios.post(
+                    "http://localhost:5000/api/register",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    }
+                );
+                console.log(response.data);
+                navigate("/login");
+            } catch (error) {
+                // Display API error messages
+                const errorMsg =
+                    error.response?.data?.error || "An error occurred. Please try again.";
+                setApiError(errorMsg);
+                console.error(error);
+            }
         }
     };
 
@@ -51,7 +81,7 @@ function Register() {
         if (values.password === "") {
             error.password = "Please enter your password";
         } else if (!pass_pattern.test(values.password)) {
-            error.password = "Please enter a valid password";
+            error.password = "Password must be 6-20 characters, include at least one digit, one uppercase, and one lowercase letter.";
         }
 
         if (values.cPassword === "") {
@@ -118,6 +148,16 @@ function Register() {
                     />
                     {errors.cPassword && <p className="error">{errors.cPassword}</p>}
                     <br /><br />
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="inputs"
+                        onChange={handleProfilePicChange}
+                    />
+                    <br /><br />
+
+                    {apiError && <p className="error">{apiError}</p>}
 
                     <button type="submit" className="btn">REGISTER</button>
 

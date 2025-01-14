@@ -1,0 +1,196 @@
+/* General Styling */
+.VolunteerDashboard {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Header Styling */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0056b3;
+    color: white;
+    padding: 15px 20px;
+  }
+  
+  .header-text h1 {
+    margin: 0;
+  }
+  
+  .header-text h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .signout-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .signout-button:hover {
+    background-color: #e64545;
+  }
+  
+  /* Feature Container Styling */
+  .feature2-container1 {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  /* Task Section Styling */
+  .task-item {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task-item h3 {
+    margin: 0 0 10px 0;
+  }
+  
+  .task-item p {
+    margin: 5px 0;
+  }
+  
+  /* Impact Section Styling */
+  .impact-section {
+    background-color: #e7f3fe;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 5px solid #0056b3;
+  }
+  
+  .impact-section h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .impact-section p {
+    margin: 5px 0;
+  }
+  
+  /* Route Optimization Section Styling */
+  .route-section {
+    background-color: #e8f5e9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 5px solid #2e7d32;
+  }
+  
+  .route-section h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .route-section p {
+    margin: 5px 0;
+  }
+  
+  /* New Feature Section Styling */
+  .new-feature-section {
+    background-color: #fff3e0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ff6f00;
+  }
+  
+  .new-feature-section h2 {
+    margin: 0 0 10px 0;
+  }
+  
+  .new-feature-section p {
+    margin: 5px 0;
+  }
+  
+  /* Footer Styling */
+  .footer2 {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+  }
+  
+  .footer2-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .footer2-section {
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .footer2-section h2 {
+    color: #ffcc00;
+  }
+  
+  .footer2-section p,
+  .footer2-section ul {
+    margin: 10px 0;
+  }
+  
+  .footer2-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer2-section ul li {
+    margin: 5px 0;
+  }
+  
+  .footer2-section ul li a {
+    color: #ffcc00;
+    text-decoration: none;
+  }
+  
+  .footer2-section ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer2-bottom {
+    text-align: center;
+    margin-top: 20px;
+    color: #aaa;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footer2-content {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer2-section {
+      margin: 10px 0;
+      text-align: center;
+    }
+  }
+  
+  .profile-pic {
+    width: 10px; /* Set the desired size */
+    height: 10px; /* Keep it square */
+    border-radius: 50%; /* Make it circular */
+    object-fit: cover; /* Ensure the image scales nicely */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border: 2px solid #f0f0f0; /* Light border for contrast */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+    margin-left: 50%;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}

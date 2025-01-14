@@ -15,12 +15,10 @@ import SignupForm from "./components/SignupForm/SignupForm"; // Import SignupFor
 import SigninForm from "./components/SignupForm/SigninForm"; // Import SigninForm for recipients
 import Dashboard from "./components/RecipianDashboard/Dashboard"; 
 import Vol from "./components/Voluntear/VolunteerHome";
-
-
-
+import Volt from "./components/Voluntear/Vol";
+import Voldesh from "./components/Voluntear/VolunteerDashboard";
 
 import "./App.css";
-
 
 const App = () => {
   return (
@@ -39,6 +37,8 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/vol" element={<Vol />} />
+        <Route path="/volt" element={<Volt />} />
+        <Route path="/Voldesh" element={<Voldesh/>} />
         {/* Recipient routes */}
         <Route path="/recipient-signin" element={<SigninForm />} />
         <Route path="/recipient-signup" element={<SignupForm />} />

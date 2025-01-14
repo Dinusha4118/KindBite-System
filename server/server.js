@@ -4,10 +4,27 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 require('dotenv').config();
+const multer = require('multer');
+const path = require('path'); // Import the path module
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+
+
+
+// Configure Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage });
 
 // MongoDB Connection
 mongoose
@@ -83,7 +100,83 @@ const notificationSchema = new mongoose.Schema({
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);
-// Routes
+
+const voluntearSchema = new mongoose.Schema({
+  username: String,
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  profilePic: String,
+});
+
+const Voluntear = mongoose.model('Voluntear', voluntearSchema );
+
+
+// Updated Signup Route
+app.post('/api/register', upload.single('profilePic'), async (req, res) => {
+  const { username, email, password } = req.body;
+  const profilePicPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+  try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newVoluntear = new Voluntear({
+          username,
+          email,
+          password: hashedPassword,
+          profilePic: profilePicPath, // Accessible path for client
+      });
+
+      await newVoluntear.save();
+      res.status(201).json({ success: true, message: 'User registered successfully.' });
+  } catch (error) {
+      if (error.code === 11000) {
+          return res.status(400).json({ success: false, error: 'Email already registered.' });
+      }
+      console.error('Error registering user:', error);
+      res.status(500).json({ success: false, error: 'Server error.' });
+  }
+});
+
+
+// Login Route
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+      const voluntear = await Voluntear.findOne({ email });
+
+      if (!voluntear) {
+          return res.status(400).json({ success: false, error: "User not found." });
+      }
+
+      // Compare password
+      const isMatch = await bcrypt.compare(password, voluntear.password);
+
+      if (!isMatch) {
+          return res.status(400).json({ success: false, error: "Invalid email or password." });
+      }
+
+      // Generate JWT Token
+      const token = jwt.sign(
+          { id: voluntear._id, email: voluntear.email },
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' }
+      );
+
+      res.json({
+          success: true,
+          token,
+          message: 'Sign-in successful',
+          email: voluntear.email,
+          username: voluntear.username,
+          profilePic: voluntear.profilePic,
+      });
+  } catch (err) {
+      console.error("Login error:", err);
+      res.status(500).json({ success: false, error: "Server error." });
+  }
+});
+
 
 // Signup Route
 app.post('/api/signup', async (req, res) => {

@@ -131,8 +131,6 @@ const Dashboard = () => {
           <h3>Your Email is {email}</h3>
         </div>
       </header>
-      <br></br>
-      <br></br>
       <div className="features-container">
         <section>
           <h2>Request Food</h2>
