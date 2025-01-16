@@ -393,9 +393,9 @@ const DonorDashboard = () => {
           </div>
         )}
 
-      <footer className="footer1">
-        <div className="footer1-content">
-          <div className="footer1-section about">
+      <footer className="footer77">
+        <div className="footer77-content">
+          <div className="footer77-section about">
             <h2>About KINDBITE</h2>
             <p>
               KINDBITE connects surplus food from restaurants and suppliers
@@ -403,7 +403,7 @@ const DonorDashboard = () => {
               while addressing food insecurity.
             </p>
           </div>
-          <div className="footer1-section links">
+          <div className="footer77-section links">
             <h2>Quick Links</h2>
             <ul>
               <li><a href="#home">Home</a></li>
@@ -413,14 +413,14 @@ const DonorDashboard = () => {
               <li><a href="#testimonials">Testimonials</a></li>
             </ul>
           </div>
-          <div className="footer1-section contact">
+          <div className="footer77-section contact">
             <h2>Contact Us</h2>
             <p>Email: support@kindbite.com</p>
             <p>Phone: +9476 456 7893</p>
             <p>Address: 123 Jayanthi Lane, Colombo 08</p>
           </div>
         </div>
-        <div className="footer1-bottom">
+        <div className="footer77-bottom">
           <p>&copy; 2024 KINDBITE. All Rights Reserved.</p>
         </div>
       </footer>

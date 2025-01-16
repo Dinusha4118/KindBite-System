@@ -183,66 +183,66 @@
 
   /* Footer Styling */
   /* Footer Styling */
-.footer1 {
+.footer77 {
     background-color: #333;
     color: white;
     padding: 40px 20px 40px 40px;
     width: 100%;
     position:absolute;
-    bottom: 60;
+    bottom: 30;
     left: 0;
     box-sizing: border-box;
     margin-top: 0%;
   }
   
-  .footer1-content {
+  .footer77-content {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
   }
   
-  .footer1-section {
+  .footer77-section {
     flex: 1 1 300px;
     margin-bottom: 20px;
   }
   
-  .footer1-section h2 {
+  .footer77-section h2 {
     font-size: 20px;
     margin-bottom: 10px;
   }
   
-  .footer1-section p {
+  .footer77-section p {
     font-size: 14px;
     line-height: 1.6;
   }
   
-  .footer1-section ul {
+  .footer77-section ul {
     list-style: none;
     padding: 0;
   }
   
-  .footer1-section ul li {
+  .footer77-section ul li {
     margin: 5px 0;
   }
   
-  .footer1-section ul li a {
+  .footer77-section ul li a {
     text-decoration: none;
     color: #ccc;
     transition: color 0.3s;
   }
   
-  .footer1-section ul li a:hover {
+  .footer77-section ul li a:hover {
     color: #fff;
   }
   
-  .footer1-bottom {
+  .footer77-bottom {
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
   }
   
-  .footer1-bottom p {
+  .footer77-bottom p {
     margin: 0;
   }
 

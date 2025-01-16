@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../Services/Services.css";
+import "../Teempage/Teempage.css";
 import logo from "../images/kindbite.png"; // Adjust the path based on your project structure
 
 
@@ -79,13 +79,13 @@ const Teempage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="footer1">
-      <div className="footer-content">
-          <div className="footer-section about">
+      <footer className="footer6">
+      <div className="footer6-content">
+          <div className="footer6-section about">
             <h2>About KINDBITE</h2>
             <p>kindbite connects surplus food from restaurants and suppliers with communities in need. Our mission is to reduce food waste while addressing food insecurity.</p>
           </div>
-          <div className="footer-section links">
+          <div className="footer6-section links">
             <h2>Quick Links</h2>
             <ul>
               <li><span onClick={goToHomepage} className="nav-link-button">Home</span></li>
@@ -95,14 +95,14 @@ const Teempage = () => {
               <li><a href="#testimonials">Testimonials</a></li>
             </ul>
           </div>
-          <div className="footer-section contact">
+          <div className="footer6-section contact">
             <h2>Contact Us</h2>
             <p>Email: support@kindbite.com</p>
             <p>Phone: +9476 456 7893</p>
             <p>Address: 123 Jayanthi Lane, Colombo 08</p>
           </div>
         </div>
-        <div className="footer-bottom">
+        <div className="footer6-bottom">
           <p>&copy; 2024 KINDBITE. All Rights Reserved.</p>
         </div>
       </footer>

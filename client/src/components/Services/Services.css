@@ -128,6 +128,7 @@
     color: #555;
     font-size: 14px;
     line-height: 1.5;
+    margin-top: 10%;
   }
 
   /* Footer Styling */
@@ -135,7 +136,8 @@
     background-color: #333;
     color: white;
     padding: 40px 20px;
-    margin-top: 30px;
+    bottom: -50%;
+    margin-bottom: 50px;
     width:100%;
   }
   

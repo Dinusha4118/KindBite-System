@@ -98,7 +98,7 @@ const singToUp = () => {
         </div>
       </div>
       {/* Footer */}
-      <footer className="footer1">
+      <footer className="footer44">
       <div className="footer-content">
           <div className="footer-section about">
             <h2>About KINDBITE</h2>
